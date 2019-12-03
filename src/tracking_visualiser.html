@@ -1,0 +1,48 @@
+<head><meta charset="utf-8" /><title>Tracking visualisation</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<canvas id="canvas" width="640" height="480"></canvas><br>
+<p id="result">no result so far</p>
+<script>
+var canvas = document.querySelector("#canvas");
+var controllerResult = document.querySelector("#result");
+canvas.width = 640;
+canvas.height = 480;
+var ctx = canvas.getContext("2d");
+
+
+var socket = new WebSocket("ws://127.0.0.1:8887");
+socket.onopen =  function(event) {console.log(event)};//idk
+socket.onclose = function(event) {console.log(event)};//idk
+socket.onerror = function(event) {console.log(event)};//idk
+socket.onmessage = function(event){
+	let lines = event.data.split('\n');
+	if (lines.length > 1){
+		// first line contains finger+rotation tracking data
+		controllerTrack(lines[0])
+		// other lines contain vision tracking data
+		positionTrack(lines.slice(0));
+	}
+}
+
+function positionTrack(lines){
+  let result = [];
+  // get values from csv into result (multidimensional array)
+  lines.forEach(line => {
+      let vals = [];
+      line.split(",").forEach(val =>{
+          vals.push(parseInt(val));
+      })
+      result.push(vals);
+  });
+
+  ctx.clearRect(0,0,640,480);
+  ctx.fillStyle = "#00FF00";
+  for(let i=0;i<result.length;i++){
+    ctx.fillRect(result[i][0],result[i][1],result[i][2],result[i][3]);
+  }
+}
+function controllerTrack(data){
+  controllerResult.innerHTML = data;
+}
+
+
+</script>

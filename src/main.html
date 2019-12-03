@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Glove + Tracking demo</title>
+	<!-- Include Libraries-->
+    <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
+    <script src="main.js"></script>
+
+</head>
+<body>
+	<a-scene>
+		<a-assets></a-assets>
+		<a-camera position="0 1.8 0">
+              <a-entity id="controller-angle" position="0.1 0 0">
+                  <a-entity id="controller-location" position="0 0 0.5" ></a-entity>
+              </a-entity>
+          </a-camera>
+          <a-entity class="hand" position="0.1 1.5 -0.3"><!-- the tracker is not in the centre of the hand - offset the hand-->
+              <a-entity class="hand-centre" vision-tracked="color:white;" material="color:yellow" rotation="0 0 0" position="0.0 0 0 " geometry="primitive: box; width: 0.1; height: 0.02; depth: 0.095">
+                  <a-entity class="index-finger joint" position="-0.04 0 -0.05">
+                      <a-entity class="index-finger 1st-segment" position="0 0 -0.03" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.05" material="color:black">
+                          <a-entity class="index-finger joint" position="0 0 -0.025">
+                              <a-entity class="index-finger 2nd-segment" position="0 0 -0.025" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.04" material="color:black">
+                                  <a-entity class="index-finger joint" position="0 0 -0.02">
+                                      <a-entity class="index-finger 3rd-segment" position="0 0 -0.02" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.03" material="color:black"></a-entity>
+                                  </a-entity>
+                              </a-entity>
+                          </a-entity>
+                      </a-entity>
+                  </a-entity>
+                  <a-entity class="middle-finger joint" position="-0.0125 0 -0.05">
+                      <a-entity class="middle-finger 1st-segment" position="0 0 -0.03" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.05" material="color:black">
+                          <a-entity class="middle-finger joint" position="0 0 -0.025">
+                              <a-entity class="middle-finger 2nd-segment" position="0 0 -0.025" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.04" material="color:black">
+                                  <a-entity class="middle-finger joint" position="0 0 -0.02">
+                                      <a-entity class="middle-finger 3rd-segment" position="0 0 -0.02" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.03" material="color:black"></a-entity>
+                                  </a-entity>
+                              </a-entity>
+                          </a-entity>
+                      </a-entity>
+                  </a-entity>
+                  <a-entity class="ring-finger joint" position="0.0125 0 -0.05">
+                      <a-entity class="ring-finger 1st-segment" position="0 0 -0.03" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.05" material="color:black">
+                          <a-entity class="ring-finger joint" position="0 0 -0.025">
+                              <a-entity class="ring-finger 2nd-segment" position="0 0 -0.025" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.04" material="color:black">
+                                  <a-entity class="ring-finger joint" position="0 0 -0.02">
+                                      <a-entity class="ring-finger 3rd-segment" position="0 0 -0.02" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.03" material="color:black"></a-entity>
+                                  </a-entity>
+                              </a-entity>
+                          </a-entity>
+                      </a-entity>
+                  </a-entity>
+                  <a-entity class="pinkie-finger joint" position="0.04 0 -0.05">
+                      <a-entity class="pinkie-finger 1st-segment" position="0 0 -0.03" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.05" material="color:black">
+                          <a-entity class="pinkie-finger joint" position="0 0 -0.025">
+                              <a-entity class="pinkie-finger 2nd-segment" position="0 0 -0.025" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.04" material="color:black">
+                                  <a-entity class="pinkie-finger joint" position="0 0 -0.02">
+                                      <a-entity class="pinkie-finger 3rd-segment" position="0 0 -0.02" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.03" material="color:black"></a-entity>
+                                  </a-entity>
+                              </a-entity>
+                          </a-entity>
+                      </a-entity>
+                  </a-entity>
+                  <a-entity class="thumb joint" position="-0.055 0 0.04" rotation="0 60 0">
+                      <a-entity class="thumb 1st-segment" position="0 0 -0.025" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.04" material="color:black">
+                          <a-entity class="thumb joint" position="0 0 -0.02">
+                              <a-entity class="thumb 2nd-segment" position="0 0 -0.02" geometry="primitive: box; width: 0.02; height: 0.02; depth: 0.03" material="color:black"></a-entity>
+                          </a-entity>
+                      </a-entity>
+                  </a-entity>
+                  <a-entity position="0 -0.1 0" id="object-location" ></a-entity>
+              </a-entity>
+          </a-entity>
+          <a-sphere position="0.2 1 -1.5" scale="0.08 0.08 0.1" color="red" id="movable"></a-sphere>
+		<a-box position="0 0 -3" color="blue"></a-box>
+		<a-sphere position="0.5 0 -2" scale="0.5 0.5 0.5" color="green"></a-sphere>
+		<a-cylinder position="-1 0 -2" scale="0.5 0.75 0.5" color="orange"></a-cylinder>
+		<a-box position="0 1.7 -2" color="yellow" scale="0.5 0.5 0.5" rotation="20 30 40"></a-box>
+		<a-box position="0 1.7 -1" color="blue" scale="0.2 0.2 0.2" rotation="20 0 40"></a-box>
+		<a-sky color="#ECECEC"></a-sky>
+	</a-scene>
+</body>
+</html>
