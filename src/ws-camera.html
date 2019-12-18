@@ -1,0 +1,75 @@
+<head><meta charset="utf-8" /><title>Tracking visualisation</title><meta name="viewport" content="width=device-width, initial-scale=1.0"></head>
+<canvas id="canvas" width="640" height="480"></canvas><br>
+<p id="result">no result so far</p>
+<script>
+var canvas = document.querySelector("#canvas");
+var controllerResult = document.querySelector("#result");
+canvas.width = 640;
+canvas.height = 480;
+var ctx = canvas.getContext("2d");
+var gettingYData = true;
+var gettingCbData = false;
+var gettingCrData = false;
+var y,cb,cr;
+// putimage data for
+var p = ctx.createImageData(1, 1);
+var px = p.data;
+px[3] = 255;
+var socket = new WebSocket("ws://192.168.1.4:8887");
+socket.binaryType = 'arraybuffer'
+socket.onopen =  function(event) {console.log(event);socket.send("y");};//idk
+socket.onclose = function(event) {console.log(event)};//idk
+socket.onerror = function(event) {console.log(event)};//idk
+socket.onmessage = function(event){
+	console.log("message");
+	if(event.data == null) return;
+	console.log(event.data);
+	if(gettingYData){
+		y = new DataView(event.data);
+		gettingYData = false; gettingCbData = true;
+		socket.send("Cb");
+	} else if (gettingCbData){
+		cb = new DataView(event.data);
+		gettingCbData = false; gettingCrData = true;
+		socket.send("Cr");
+	}	else if (gettingCrData){
+		cr = new DataView(event.data);
+		gettingCrData = false; gettingYData = true;
+		// color in the canvas
+		for(var x = 0; x < 318; x++){
+			for(var yy = 0; yy < 238;yy++){
+				var yOffset =  x + 320*yy;
+				var cbcrOffset = Math.floor(x/2)+Math.floor(yy/2)*320/2
+				px[0] = y.getUint8(yOffset);
+				px[1] = cb.getUint8(cbcrOffset);
+				px[2] = cr.getUint8(cbcrOffset);
+				ctx.putImageData(p, x, yy);
+			}
+		}
+		socket.send("y");
+	}
+}
+
+function positionTrack(lines){
+  let result = [];
+  // get values from csv into result (multidimensional array)
+  lines.forEach(line => {
+      let vals = [];
+      line.split(",").forEach(val =>{
+          vals.push(parseInt(val));
+      })
+      result.push(vals);
+  });
+
+  ctx.clearRect(0,0,640,480);
+  ctx.fillStyle = "#00FF00";
+  for(let i=0;i<result.length;i++){
+    ctx.fillRect(result[i][0],result[i][1],result[i][2],result[i][3]);
+  }
+}
+function controllerTrack(data){
+  controllerResult.innerHTML = data;
+}
+
+
+</script>

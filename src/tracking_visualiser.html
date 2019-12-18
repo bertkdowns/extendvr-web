@@ -7,19 +7,23 @@ var controllerResult = document.querySelector("#result");
 canvas.width = 640;
 canvas.height = 480;
 var ctx = canvas.getContext("2d");
+var debug = true;
 
-
-var socket = new WebSocket("ws://127.0.0.1:8887");
+var socket = new WebSocket("ws://192.168.1.4:8887");
 socket.onopen =  function(event) {console.log(event)};//idk
 socket.onclose = function(event) {console.log(event)};//idk
-socket.onerror = function(event) {console.log(event)};//idk
+socket.onerror = function(event) {console.log(event);controllerResult.innerHTML = event.data};//idk
 socket.onmessage = function(event){
+	if(debug == true){
+    debug = false;
+    console.log(event.data);
+  }
 	let lines = event.data.split('\n');
 	if (lines.length > 1){
 		// first line contains finger+rotation tracking data
 		controllerTrack(lines[0])
 		// other lines contain vision tracking data
-		positionTrack(lines.slice(0));
+		positionTrack(lines.slice(2));
 	}
 }
 
@@ -29,7 +33,7 @@ function positionTrack(lines){
   lines.forEach(line => {
       let vals = [];
       line.split(",").forEach(val =>{
-          vals.push(parseInt(val));
+        vals.push(parseInt(val));
       })
       result.push(vals);
   });

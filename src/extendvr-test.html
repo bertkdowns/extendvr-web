@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Glove + Tracking demo</title>
+	<!-- Include Libraries-->
+    <script src="https://aframe.io/releases/0.9.1/aframe.min.js"></script>
+    <script src="extendvr-library.js"></script>
+
+</head>
+<body>
+	<a-scene>
+		<a-assets></a-assets>
+		<a-camera position="0 1.8 0">
+        </a-camera>
+        <a-entity oculus-touch-controls="hand: right"><a-sphere scale="0.08 0.08 0.1" color="blue" ></a-sphere></a-entity>
+        <a-sphere position="0.2 1 -1.5" scale="0.08 0.08 0.1" color="red" id="movable"></a-sphere>
+		<a-box position="0 0 -3" color="blue"></a-box>
+		<a-sphere position="0.5 0 -2" scale="0.5 0.5 0.5" color="green"></a-sphere>
+		<a-cylinder position="-1 0 -2" scale="0.5 0.75 0.5" color="orange"></a-cylinder>
+		<a-box position="0 1.7 -2" color="yellow" scale="0.5 0.5 0.5" rotation="20 30 40"></a-box>
+		<a-box position="0 1.7 -1" color="blue" scale="0.2 0.2 0.2" rotation="20 0 40"></a-box>
+		<a-sky color="#ECECEC"></a-sky>
+	</a-scene>
+</body>
+</html>
