@@ -8,8 +8,9 @@ canvas.width = 640;
 canvas.height = 480;
 var ctx = canvas.getContext("2d");
 var debug = true;
+var record = 0; // allows us to record n lines of tracking data
 
-var socket = new WebSocket("ws://192.168.1.4:8887");
+var socket = new WebSocket("ws://192.168.1.5:8887");
 socket.onopen =  function(event) {console.log(event)};//idk
 socket.onclose = function(event) {console.log(event)};//idk
 socket.onerror = function(event) {console.log(event);controllerResult.innerHTML = event.data};//idk
@@ -28,6 +29,10 @@ socket.onmessage = function(event){
 }
 
 function positionTrack(lines){
+  if(record != 0){
+    console.log(lines);
+    record--;
+  }
   let result = [];
   // get values from csv into result (multidimensional array)
   lines.forEach(line => {

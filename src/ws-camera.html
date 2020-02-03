@@ -15,7 +15,7 @@ var y,cb,cr;
 var p = ctx.createImageData(1, 1);
 var px = p.data;
 px[3] = 255;
-var socket = new WebSocket("ws://192.168.1.4:8887");
+var socket = new WebSocket("ws://192.168.1.5:8887");
 socket.binaryType = 'arraybuffer'
 socket.onopen =  function(event) {console.log(event);socket.send("y");};//idk
 socket.onclose = function(event) {console.log(event)};//idk

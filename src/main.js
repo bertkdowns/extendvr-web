@@ -64,7 +64,7 @@ window.onload = () =>{
 //--------------------------------------------------------------------------
 //                        WebSocket setup
 //--------------------------------------------------------------------------
-var socket = new WebSocket("ws://192.168.1.4:8887");
+var socket = new WebSocket("ws://192.168.1.5:8887");
 socket.onopen =  function(event) {console.log(event)};//idk
 socket.onclose = function(event) {console.log(event)};//idk
 socket.onerror = function(event) {console.log(event)};//idk
