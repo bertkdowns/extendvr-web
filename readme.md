@@ -1,0 +1,1 @@
+This project is a basic (testing) web frontend/library, using the Aframe WebXR libraries. It reads the data from the main extend-vr backend, and uses it to render a 3d scene, with a virtual "hand" with individual finger tracking based on the data read from the controller. It demonstrates the working software and hardware.
